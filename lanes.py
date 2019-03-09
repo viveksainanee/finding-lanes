@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-import matplotlib.pyplot as plt
 
 #canny function takes in an image
 def canny(image):
@@ -28,6 +27,14 @@ def canny(image):
 
     return canny
 
+def region_of_interest(image):
+    height = image.shape[0]
+    polygons = np.array([
+        [(200,height), (1100, height), (550, 250)]])
+    mask = np.zeros_like(image)
+    cv2.fillPoly(mask, polygons, 255)
+    return mask
+
 
 
 
@@ -47,7 +54,7 @@ canny = canny(lane_image)
 
 
 #show the image
-plt.imshow(canny)
+cv2.imshow('result', region_of_interest(canny))
 
 #show the image indefinitely until keypress
-plt.show()
+cv2.waitKey(0)
